@@ -30,11 +30,12 @@ kube_cilium_helm_release_values:
   bpf:
     preallocateMaps: false
     masquerade: false
-  cleanBpfState: false
-  cleanState: false
+  cleanBpfState: true
+  cleanState: true
+  waitForKubeProxy: true
   cni:
     install: true
-    uninstall: false
+    uninstall: true
     chainingMode: portmap
     exclusive: true
     confPath: /etc/cni/net.d
@@ -72,11 +73,14 @@ kube_cilium_helm_release_values:
   envoy:
     enabled: false
   sessionAffinity: true
+  sleepAfterInit: false
   tunnelProtocol: vxlan
   routingMode: tunnel
   operator:
     enabled: true
     replicas: 1
+    securityContext:
+      privileged: true
   nodeinit:
     enabled: true
     securityContext:
