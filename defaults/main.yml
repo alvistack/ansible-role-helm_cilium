@@ -67,7 +67,6 @@ kube_cilium_helm_release_values:
   enableIPv6Masquerade: false
   enableIPv4BIGTCP: false
   enableIPv6BIGTCP: false
-  ipv4NativeRoutingCIDR: "{{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.prefix) }}"
   nodePort:
     enabled: true
   envoy:
