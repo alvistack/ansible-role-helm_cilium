@@ -1,13 +1,13 @@
-# Ansible Role for Cilium on Kubernetes
+# Ansible Role for Cilium with Helm
 
 <a href="https://alvistack.com" title="AlviStack" target="_blank"><img src="/alvistack.svg" height="75" alt="AlviStack"></a>
 
-[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/ansible-role-kube_cilium/master)](https://gitlab.com/alvistack/ansible-role-kube_cilium/-/pipelines)
-[![GitHub tag](https://img.shields.io/github/tag/alvistack/ansible-role-kube_cilium.svg)](https://github.com/alvistack/ansible-role-kube_cilium/tags)
-[![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-kube_cilium.svg)](https://github.com/alvistack/ansible-role-kube_cilium/blob/master/LICENSE)
-[![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.kube_cilium-blue.svg)](https://galaxy.ansible.com/alvistack/kube_cilium)
+[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/ansible-role-helm_cilium/master)](https://gitlab.com/alvistack/ansible-role-helm_cilium/-/pipelines)
+[![GitHub tag](https://img.shields.io/github/tag/alvistack/ansible-role-helm_cilium.svg)](https://github.com/alvistack/ansible-role-helm_cilium/tags)
+[![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-helm_cilium.svg)](https://github.com/alvistack/ansible-role-helm_cilium/blob/master/LICENSE)
+[![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.helm_cilium-blue.svg)](https://galaxy.ansible.com/alvistack/helm_cilium)
 
-Ansible Role for Cilium on Kubernetes Installation.
+Ansible Role for Cilium with Helm Installation.
 
 ## Requirements
 

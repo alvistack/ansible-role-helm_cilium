@@ -15,13 +15,13 @@
 # limitations under the License.
 
 # Release name to manage.
-kube_cilium_helm_release_name: cilium
+helm_cilium_helm_release_name: cilium
 
 # Kubernetes namespace where the chart should be installed.
-kube_cilium_helm_release_namespace: kube-system
+helm_cilium_helm_release_namespace: kube-system
 
 # Value to pass to chart.
-kube_cilium_helm_release_values:
+helm_cilium_helm_release_values:
   cluster:
     name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
     id: 0

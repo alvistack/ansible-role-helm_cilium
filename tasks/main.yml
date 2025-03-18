@@ -88,8 +88,8 @@
 
 - name: helm install
   kubernetes.core.helm:
-    release_name: "{{ kube_cilium_helm_release_name }}"
-    release_namespace: "{{ kube_cilium_helm_release_namespace }}"
+    release_name: "{{ helm_cilium_helm_release_name }}"
+    release_namespace: "{{ helm_cilium_helm_release_namespace }}"
     chart_ref: /etc/kubernetes/charts/cilium
     values_files: /etc/kubernetes/charts/cilium.values.yaml
     create_namespace: true
