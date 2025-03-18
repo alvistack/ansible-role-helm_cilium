@@ -14,140 +14,73 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Path to directory where CNI plugin binaries are located.
-kube_cilium_cni_plugin_dirs: /opt/cni/bin
+# Release name to manage.
+helm_cilium_helm_release_name: cilium
 
-# Path to the directory where network configuration files are located.
-kube_cilium_network_config_dir: /etc/cni/net.d
+# Kubernetes namespace where the chart should be installed.
+helm_cilium_helm_release_namespace: kube-system
 
-# Enable native IP masquerade support in eBPF.
-kube_cilium_bpf_masquerade: false
-
-# If you want to clean cilium BPF state, set this to true; Removes all BPF
-# maps from the filesystem. Upon restart, endpoints are restored with the
-# same IP addresses, however any ongoing connections may be disrupted
-# briefly. Loadbalancing decisions will be reset, so any ongoing
-# connections via a service may be loadbalanced to a different backend
-# after restart.
-kube_cilium_clean_cilium_bpf_state: false
-
-# If a serious issue occurs during Cilium startup, this invasive option
-# may be set to true to remove all persistent state. Endpoints will not be
-# restored using knowledge from a prior Cilium run, so they may receive
-# new IP addresses upon restart. This also triggers
-# clean-cilium-bpf-state.
-kube_cilium_clean_cilium_state: false
-
-# Enables pre-allocation of eBPF map values. This increases memory usage
-# but can reduce latency.
-kube_cilium_bpf_preallocatemaps: false
-
-# Unique ID of the cluster. Must be unique across all connected clusters
-# and in the range of 1 to 255. Only required for Cluster Mesh.
-kube_cilium_cluster_id: "0"
-
-# Name of the cluster. Only required for Cluster Mesh.
-kube_cilium_cluster_name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
-
-# Configure chaining on top of other CNI plugins.
-kube_cilium_cni_chainingmode: portmap
-
-# Make Cilium take ownership over the /etc/cni/net.d directory on the
-# node, renaming all non-Cilium CNI configurations to *.cilium_bak. This
-# ensures no Pods can be scheduled using other CNI plugins during Cilium
-# agent downtime.
-kube_cilium_cni_exclusive: true
-
-# Remove the CNI configuration and binary files on agent shutdown. Enable
-# this if you’re removing Cilium from the cluster. Disable this to prevent
-# the CNI configuration file from being removed during agent upgrade,
-# which can cause nodes to go unmanageable.
-kube_cilium_cni_uninstall: true
-
-# Enables masquerading of IPv4 traffic leaving the node from endpoints.
-kube_cilium_enableipv4masquerade: true
-
-# Enable IPv4 BIG TCP option which increases device's maximum GRO/GSO
-# limits for IPv4.
-kube_cilium_enableipv4bigtcp: false
-
-# Enables IPv6 BIG TCP support which increases maximum GSO/GRO limits for
-# nodes and pods.
-kube_cilium_enableipv6bigtcp: false
-
-# Enables masquerading of IPv6 traffic leaving the node from endpoints.
-kube_cilium_enableipv6masquerade: false
-
-# Enable use of per endpoint routes instead of routing via the
-# cilium_host interface.
-kube_cilium_endpointroutes_enabled: false
-
-# Enable ExternalIPs service support.
-kube_cilium_externalips_enabled: true
-
-# Enable hostPort service support.
-kube_cilium_hostport_enabled: true
-
-# Enable Hubble (true by default).
-kube_cilium_hubble_enabled: false
-
-# Configure IP Address Management mode.
-kube_cilium_ipam_mode: cluster-pool
-
-# IPv4 CIDR mask size to delegate to individual nodes for IPAM.
-kube_cilium_ipam_operator_clusterpoolipv4masksize: "24"
-
-# IPv4 CIDR list range to delegate to individual nodes for IPAM.
-kube_cilium_ipam_operator_clusterpoolipv4podcidrlist: 10.233.64.0/18
-
-# Enable IPv4 support.
-kube_cilium_ipv4_enabled: true
-
-# Describes a v4 CIDR in which pod IPs are routable
-kube_cilium_ipv4nativeroutingcidr: "{{ (ansible_default_ipv4.network + '/' + ansible_default_ipv4.prefix) }}"
-
-# Enable IPv6 support.
-kube_cilium_ipv6_enabled: false
-
-# Enables waiting for Kubernetes to provide the PodCIDR range via the
-# Kubernetes node resource.
-kube_cilium_k8s_requireipv4podcidr: false
-
-# Enables waiting for Kubernetes to provide the PodCIDR range via the
-# Kubernetes node resource.
-kube_cilium_k8s_requireipv6podcidr: false
-
-# Configure service proxy name for Cilium (!!null or `nonexistent`).
-# See https://github.com/kubernetes/kubernetes/pull/120069#issuecomment-2111252221
-kube_cilium_k8s_service_proxy_name: nonexistent
-
-# Controls how to enable kube-proxy replacement features in BPF datapath.
-kube_cilium_kubeproxyreplacement: false
-
-# Enable the Cilium NodePort service implementation.
-kube_cilium_nodeport_enabled: true
-
-# Enable the node initialization DaemonSet.
-kube_cilium_nodeinit_enabled: true
-
-# Security context to be added to nodeinit pods.
-kube_cilium_nodeinit_securitycontext_privileged: true
-
-# Number of replicas to run for the cilium-operator deployment.
-kube_cilium_operator_replicas: 1
-
-# Security context to be added to cilium-operator pods
-kube_cilium_operator_securitycontext_privileged: true
-
-# Enable sessionAffinity support.
-kube_cilium_sessionaffinity: true
-
-# Security context to be added to agent pods.
-kube_cilium_securitycontext_privileged: true
-
-# Configure the encapsulation configuration for communication between
-# nodes.
-kube_cilium_routing_mode: tunnel
-
-# Tunneling protocol to use in tunneling mode and for ad-hoc tunnels.
-kube_cilium_tunnel_protocol: vxlan
+# Value to pass to chart.
+helm_cilium_helm_release_values:
+  cluster:
+    name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
+    id: 0
+  securityContext:
+    privileged: true
+  bpf:
+    preallocateMaps: false
+    masquerade: false
+  cleanBpfState: true
+  cleanState: true
+  waitForKubeProxy: true
+  cni:
+    install: true
+    uninstall: true
+    chainingMode: portmap
+    exclusive: true
+    confPath: /etc/cni/net.d
+    binPath: /opt/cni/bin
+  endpointRoutes:
+    enabled: false
+  externalIPs:
+    enabled: true
+  hostPort:
+    enabled: true
+  hubble:
+    enabled: false
+  ipam:
+    mode: cluster-pool
+    operator:
+      clusterPoolIPv4PodCIDRList:
+        - 10.233.64.0/18
+      clusterPoolIPv4MaskSize: 24
+  ipv4:
+    enabled: true
+  ipv6:
+    enabled: false
+  k8s:
+    requireIPv4PodCIDR: false
+    requireIPv6PodCIDR: false
+    serviceProxyName: nonexistent
+  kubeProxyReplacement: false
+  enableIPv4Masquerade: true
+  enableIPv6Masquerade: false
+  enableIPv4BIGTCP: false
+  enableIPv6BIGTCP: false
+  nodePort:
+    enabled: true
+  envoy:
+    enabled: false
+  sessionAffinity: true
+  sleepAfterInit: false
+  tunnelProtocol: vxlan
+  routingMode: tunnel
+  operator:
+    enabled: true
+    replicas: 1
+    securityContext:
+      privileged: true
+  nodeinit:
+    enabled: true
+    securityContext:
+      privileged: true
