@@ -7,7 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-helm_cilium.svg)](https://github.com/alvistack/ansible-role-helm_cilium/blob/master/LICENSE)
 [![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.helm_cilium-blue.svg)](https://galaxy.ansible.com/alvistack/helm_cilium)
 
-Ansible Role for Cilium with Helm Installation.
+Ansible Role for Cilium with Helm.
 
 ## Requirements
 
