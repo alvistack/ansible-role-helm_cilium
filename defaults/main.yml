@@ -42,8 +42,6 @@ helm_cilium_helm_release_values:
     binPath: /opt/cni/bin
   endpointRoutes:
     enabled: false
-  externalIPs:
-    enabled: true
   hostPort:
     enabled: true
   hubble:
