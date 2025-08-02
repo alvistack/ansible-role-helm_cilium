@@ -26,6 +26,7 @@ helm_cilium_helm_release_values:
     name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
     id: 0
   securityContext:
+    allowPrivilegeEscalation: true
     privileged: true
   bpf:
     preallocateMaps: false
@@ -42,8 +43,6 @@ helm_cilium_helm_release_values:
     binPath: /opt/cni/bin
   endpointRoutes:
     enabled: false
-  hostPort:
-    enabled: true
   hubble:
     enabled: false
   ipam:
@@ -77,8 +76,10 @@ helm_cilium_helm_release_values:
     enabled: true
     replicas: 1
     securityContext:
+      allowPrivilegeEscalation: true
       privileged: true
   nodeinit:
     enabled: true
     securityContext:
+      allowPrivilegeEscalation: true
       privileged: true
