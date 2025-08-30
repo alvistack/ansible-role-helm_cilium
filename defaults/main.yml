@@ -64,6 +64,9 @@ helm_cilium_helm_release_values:
   enableIPv6Masquerade: false
   enableIPv4BIGTCP: false
   enableIPv6BIGTCP: false
+  loadBalancer:
+    protocolDifferentiation:
+      enabled: true
   nodePort:
     enabled: true
   envoy:
