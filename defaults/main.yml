@@ -87,3 +87,5 @@ helm_cilium_helm_release_values:
     securityContext:
       allowPrivilegeEscalation: true
       privileged: true
+  sctp:
+    enabled: true
