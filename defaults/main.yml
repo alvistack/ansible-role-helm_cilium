@@ -22,6 +22,8 @@ helm_cilium_helm_release_namespace: kube-system
 
 # Value to pass to chart.
 helm_cilium_helm_release_values:
+  k8sServiceHost: "{{ hostvars[groups['kube_master'][0]].ansible_default_ipv4.address }}"
+  k8sServicePort: 6443
   cluster:
     name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
     id: 0
@@ -43,6 +45,8 @@ helm_cilium_helm_release_values:
     binPath: /opt/cni/bin
   endpointRoutes:
     enabled: false
+  hostPort:
+    enabled: true
   hubble:
     enabled: false
   ipam:
@@ -59,11 +63,13 @@ helm_cilium_helm_release_values:
     requireIPv4PodCIDR: false
     requireIPv6PodCIDR: false
     serviceProxyName: nonexistent
-  kubeProxyReplacement: true
+  kubeProxyReplacement: false
   enableIPv4Masquerade: true
   enableIPv6Masquerade: false
   enableIPv4BIGTCP: false
   enableIPv6BIGTCP: false
+  nodePort:
+    enabled: true
   envoy:
     enabled: false
   sessionAffinity: true
