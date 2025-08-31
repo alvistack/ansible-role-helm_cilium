@@ -60,7 +60,7 @@ helm_cilium_helm_release_values:
   k8s:
     requireIPv4PodCIDR: false
     requireIPv6PodCIDR: false
-    serviceProxyName: nonexistent
+    serviceProxyName: cilium
   kubeProxyReplacement: false
   enableIPv4Masquerade: true
   enableIPv6Masquerade: false
