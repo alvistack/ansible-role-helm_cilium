@@ -22,6 +22,8 @@ helm_cilium_helm_release_namespace: kube-system
 
 # Value to pass to chart.
 helm_cilium_helm_release_values:
+  k8sServiceHost: "{{ hostvars[groups['kube_master'][0]].ansible_default_ipv4.address }}"
+  k8sServicePort: 6443
   cluster:
     name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
     id: 0
@@ -64,6 +66,9 @@ helm_cilium_helm_release_values:
   enableIPv6Masquerade: false
   enableIPv4BIGTCP: false
   enableIPv6BIGTCP: false
+  loadBalancer:
+    protocolDifferentiation:
+      enabled: true
   nodePort:
     enabled: true
   envoy:
@@ -83,3 +88,5 @@ helm_cilium_helm_release_values:
     securityContext:
       allowPrivilegeEscalation: true
       privileged: true
+  sctp:
+    enabled: true
