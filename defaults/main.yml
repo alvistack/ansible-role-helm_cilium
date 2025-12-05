@@ -43,6 +43,10 @@ helm_cilium_helm_release_values:
     exclusive: true
     confPath: /etc/cni/net.d
     binPath: /opt/cni/bin
+  gatewayAPI:
+    enabled: true
+    hostNetwork:
+      enabled: true
   endpointRoutes:
     enabled: false
   hubble:
@@ -72,7 +76,7 @@ helm_cilium_helm_release_values:
   nodePort:
     enabled: true
   envoy:
-    enabled: false
+    enabled: true
   sessionAffinity: true
   sleepAfterInit: false
   tunnelProtocol: vxlan
