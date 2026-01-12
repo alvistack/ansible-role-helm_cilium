@@ -22,10 +22,10 @@ helm_cilium_helm_release_namespace: kube-system
 
 # Value to pass to chart.
 helm_cilium_helm_release_values:
-  k8sServiceHost: "{{ hostvars[groups['kube_master'][0]].ansible_default_ipv4.address }}"
+  k8sServiceHost: "{{ hostvars[groups['kube_master'][0]].ansible_facts['default_ipv4'].address }}"
   k8sServicePort: 6443
   cluster:
-    name: "{{ hostvars[groups['kube_master'][0]].ansible_machine_id }}"
+    name: "{{ hostvars[groups['kube_master'][0]].ansible_facts['machine_id'] }}"
     id: 0
   securityContext:
     allowPrivilegeEscalation: true
