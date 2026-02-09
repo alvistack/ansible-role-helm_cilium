@@ -9,18 +9,10 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      securityContext:
-        seccompProfile:
-          type: RuntimeDefault
       containers:
         - name: certgen
           image: {{ include "cilium.image" .Values.certgen.image | quote }}
           imagePullPolicy: {{ .Values.certgen.image.pullPolicy }}
-          securityContext:
-            capabilities:
-              drop:
-              - ALL
-            allowPrivilegeEscalation: false
           {{- with .Values.certgen.resources }}
           resources:
           {{- toYaml . | nindent 12 }}
@@ -92,7 +84,7 @@ spec:
           volumeMounts:
           {{- toYaml . | nindent 10 }}
           {{- end }}
-      hostNetwork: false
+      hostNetwork: true
       {{- with .Values.certgen.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -104,6 +96,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      serviceAccount: {{ .Values.serviceAccounts.clustermeshcertgen.name | quote }}
       serviceAccountName: {{ .Values.serviceAccounts.clustermeshcertgen.name | quote }}
       automountServiceAccountToken: {{ .Values.serviceAccounts.clustermeshcertgen.automount }}
       {{- with .Values.imagePullSecrets }}
@@ -115,11 +108,9 @@ spec:
       volumes:
       {{- toYaml . | nindent 6 }}
       {{- end }}
-      {{- with .Values.certgen.affinity }}
       affinity:
+      {{- with .Values.certgen.affinity }}
       {{- toYaml . | nindent 8 }}
       {{- end }}
-  {{- with .Values.certgen.ttlSecondsAfterFinished }}
-  ttlSecondsAfterFinished: {{ . }}
-  {{- end }}
+  ttlSecondsAfterFinished: {{ .Values.certgen.ttlSecondsAfterFinished }}
 {{- end }}

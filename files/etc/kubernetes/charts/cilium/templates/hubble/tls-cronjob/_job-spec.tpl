@@ -137,6 +137,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      serviceAccount: {{ .Values.serviceAccounts.hubblecertgen.name | quote }}
       serviceAccountName: {{ .Values.serviceAccounts.hubblecertgen.name | quote }}
       automountServiceAccountToken: {{ .Values.serviceAccounts.hubblecertgen.automount }}
       {{- with .Values.imagePullSecrets }}
@@ -148,11 +149,9 @@ spec:
       volumes:
       {{- toYaml . | nindent 6 }}
       {{- end }}
-      {{- with .Values.certgen.affinity }}
       affinity:
+      {{- with .Values.certgen.affinity }}
       {{- toYaml . | nindent 8 }}
       {{- end }}
-  {{- with .Values.certgen.ttlSecondsAfterFinished }}
-  ttlSecondsAfterFinished: {{ . }}
-  {{- end }}
+  ttlSecondsAfterFinished: {{ .Values.certgen.ttlSecondsAfterFinished }}
 {{- end }}
