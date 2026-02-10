@@ -49,6 +49,8 @@ helm_cilium_helm_release_values:
       enabled: true
   endpointRoutes:
     enabled: false
+  socketLB:
+    enabled: true
   hubble:
     enabled: false
   ipam:
@@ -66,10 +68,13 @@ helm_cilium_helm_release_values:
     requireIPv6PodCIDR: false
     serviceProxyName: nonexistent
   kubeProxyReplacement: false
+  localRedirectPolicies:
+    enabled: true
   enableIPv4Masquerade: true
   enableIPv6Masquerade: false
   enableIPv4BIGTCP: false
   enableIPv6BIGTCP: false
+  enableTunnelBIGTCP: false
   loadBalancer:
     protocolDifferentiation:
       enabled: true
