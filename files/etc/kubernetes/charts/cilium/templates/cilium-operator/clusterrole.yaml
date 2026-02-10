@@ -69,7 +69,7 @@ rules:
   resources:
   - endpointslices
   verbs:
-{{- if or .Values.clustermesh.enableEndpointSliceSynchronization .Values.clustermesh.mcsapi.enabled .Values.clustermesh.enableMCSAPISupport }}
+{{- if or .Values.clustermesh.enableEndpointSliceSynchronization .Values.clustermesh.enableMCSAPISupport }}
   - create
   - update
   - delete
@@ -78,17 +78,6 @@ rules:
   - get
   - list
   - watch
-{{- if .Values.clustermesh.enableEndpointSliceSynchronization }}
-- apiGroups:
-  - ""
-  resources:
-  # The controller needs to be able to set a service's finalizers to be able to create an EndpointSlice
-  # resource that is owned by the service and sets blockOwnerDeletion=true in its ownerRef.
-  # This is required when the admission plugin OwnerReferencesPermissionEnforcement is activated.
-  - services/finalizers
-  verbs:
-  - update
-{{- end }}
 - apiGroups:
   - ""
   resources:
@@ -120,20 +109,6 @@ rules:
   - list
   - watch
 {{- if or .Values.ingressController.enabled .Values.gatewayAPI.enabled }}
-  - create
-  - update
-  - delete
-  - patch
-{{- end }}
-{{- if or .Values.ingressController.enabled .Values.gatewayAPI.enabled }}
-- apiGroups:
-  - "discovery.k8s.io"
-  resources:
-  - endpointslices
-  verbs:
-  - get
-  - list
-  - watch
   - create
   - update
   - delete
@@ -252,6 +227,7 @@ rules:
   - update
   resourceNames:
   - ciliumloadbalancerippools.cilium.io
+  - ciliumbgppeeringpolicies.cilium.io
   - ciliumbgpclusterconfigs.cilium.io
   - ciliumbgppeerconfigs.cilium.io
   - ciliumbgpadvertisements.cilium.io
@@ -277,6 +253,7 @@ rules:
   resources:
   - ciliumloadbalancerippools
   - ciliumpodippools
+  - ciliumbgppeeringpolicies
   - ciliumbgpclusterconfigs
   - ciliumbgpnodeconfigoverrides
   - ciliumbgppeerconfigs
@@ -324,10 +301,6 @@ rules:
   - networking.k8s.io
   resources:
   - ingresses/status # To update ingress status with load balancer IP.
-  # The controller needs to be able to set ingress finalizers to be able to create a CiliumEnvoyConfig
-  # resource that is owned by the ingress, and set blockOwnerDeletion=true in its ownerRef.
-  # This is required when the admission plugin OwnerReferencesPermissionEnforcement is activated.
-  - ingresses/finalizers
   verbs:
   - update
 {{- end }}
@@ -379,7 +352,7 @@ rules:
   - update
   - patch
 {{- end }}
-{{- if or .Values.gatewayAPI.enabled .Values.clustermesh.mcsapi.enabled .Values.clustermesh.enableMCSAPISupport }}
+{{- if or .Values.gatewayAPI.enabled .Values.clustermesh.enableMCSAPISupport }}
 - apiGroups:
   - multicluster.x-k8s.io
   resources:
@@ -388,14 +361,14 @@ rules:
   - get
   - list
   - watch
-{{- if or .Values.clustermesh.mcsapi.enabled .Values.clustermesh.enableMCSAPISupport }}
+{{- if .Values.clustermesh.enableMCSAPISupport }}
   - create
   - update
   - patch
   - delete
 {{- end }}
 {{- end }}
-{{- if or .Values.clustermesh.mcsapi.enabled .Values.clustermesh.enableMCSAPISupport }}
+{{- if .Values.clustermesh.enableMCSAPISupport }}
 - apiGroups:
   - multicluster.x-k8s.io
   resources:
@@ -428,10 +401,4 @@ rules:
   - patch
   - delete
 {{- end }}
-- apiGroups:
-  - cilium.io
-  resources:
-  - ciliumendpointslices
-  verbs:
-  - deletecollection
 {{- end }}

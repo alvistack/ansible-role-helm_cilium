@@ -74,11 +74,11 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthz
-            port: http
+            port: 8081
         readinessProbe:
           httpGet:
             path: /
-            port: http
+            port: 8081
         {{- with .Values.hubble.ui.frontend.resources }}
         resources:
           {{- toYaml . | trim | nindent 10 }}
@@ -184,12 +184,8 @@ spec:
           defaultMode: 420
           name: hubble-ui-nginx
         name: hubble-ui-nginx-conf
-      - name: tmp-dir
-        {{- if .Values.hubble.ui.tmpVolume }}
-          {{- toYaml .Values.hubble.ui.tmpVolume | nindent 8 }}
-        {{- else }}
-        emptyDir: {}
-        {{- end }}
+      - emptyDir: {}
+        name: tmp-dir
       {{- if .Values.hubble.relay.tls.server.enabled }}
       - name: hubble-ui-client-certs
       {{- if .Values.hubble.ui.standalone.enabled }}
