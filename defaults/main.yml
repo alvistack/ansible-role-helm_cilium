@@ -33,8 +33,8 @@ helm_cilium_helm_release_values:
   bpf:
     preallocateMaps: false
     masquerade: false
-  cleanBpfState: true
-  cleanState: true
+  cleanBpfState: false
+  cleanState: false
   waitForKubeProxy: true
   cni:
     install: true
@@ -43,10 +43,6 @@ helm_cilium_helm_release_values:
     exclusive: true
     confPath: /etc/cni/net.d
     binPath: /opt/cni/bin
-  gatewayAPI:
-    enabled: true
-    hostNetwork:
-      enabled: true
   endpointRoutes:
     enabled: false
   socketLB:
@@ -81,7 +77,7 @@ helm_cilium_helm_release_values:
   nodePort:
     enabled: true
   envoy:
-    enabled: true
+    enabled: false
   sessionAffinity: true
   sleepAfterInit: false
   tunnelProtocol: vxlan
