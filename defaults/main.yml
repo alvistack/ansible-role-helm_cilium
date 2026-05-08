@@ -27,6 +27,8 @@ helm_cilium_helm_release_values:
   cluster:
     name: "{{ hostvars[groups['kube_master'][0]].ansible_facts['machine_id'] }}"
     id: 0
+  image:
+    repository: quay.io/cilium/cilium
   securityContext:
     allowPrivilegeEscalation: true
     privileged: true
@@ -47,8 +49,20 @@ helm_cilium_helm_release_values:
     enabled: false
   socketLB:
     enabled: true
+  certgen:
+    image:
+      repository: quay.io/cilium/certgen
   hubble:
     enabled: false
+    relay:
+      image:
+        repository: quay.io/cilium/hubble-relay
+    backend:
+      image:
+        repository: quay.io/cilium/hubble-ui-backend
+    frontend:
+      image:
+        repository: quay.io/cilium/hubble-ui
   ipam:
     mode: cluster-pool
     operator:
@@ -78,20 +92,37 @@ helm_cilium_helm_release_values:
     enabled: true
   envoy:
     enabled: false
+    image:
+      repository: quay.io/cilium/cilium-envoy
   sessionAffinity: true
   sleepAfterInit: false
   tunnelProtocol: vxlan
   routingMode: tunnel
   operator:
     enabled: true
+    image:
+      repository: quay.io/cilium/operator
     replicas: 1
     securityContext:
       allowPrivilegeEscalation: true
       privileged: true
   nodeinit:
     enabled: true
+    image:
+      repository: quay.io/cilium/startup-script
     securityContext:
       allowPrivilegeEscalation: true
       privileged: true
+  preflight:
+    enabled: false
+    image:
+      repository: quay.io/cilium/cilium
+    envoy:
+      image:
+        repository: quay.io/cilium/cilium-envoy
+  clustermesh:
+    apiserver:
+      image:
+        repository: quay.io/cilium/clustermesh-apiserver
   sctp:
     enabled: true
