@@ -29,6 +29,8 @@ helm_cilium_helm_release_values:
     id: 0
   image:
     repository: quay.io/cilium/cilium
+    pullPolicy: IfNotPresent
+    useDigest: false
   securityContext:
     allowPrivilegeEscalation: true
     privileged: true
@@ -52,17 +54,25 @@ helm_cilium_helm_release_values:
   certgen:
     image:
       repository: quay.io/cilium/certgen
+      pullPolicy: IfNotPresent
+      useDigest: false
   hubble:
     enabled: false
     relay:
       image:
         repository: quay.io/cilium/hubble-relay
+        pullPolicy: IfNotPresent
+        useDigest: false
     backend:
       image:
         repository: quay.io/cilium/hubble-ui-backend
+        pullPolicy: IfNotPresent
+        useDigest: false
     frontend:
       image:
         repository: quay.io/cilium/hubble-ui
+        pullPolicy: IfNotPresent
+        useDigest: false
   ipam:
     mode: cluster-pool
     operator:
@@ -94,6 +104,8 @@ helm_cilium_helm_release_values:
     enabled: false
     image:
       repository: quay.io/cilium/cilium-envoy
+      pullPolicy: IfNotPresent
+      useDigest: false
   sessionAffinity: true
   sleepAfterInit: false
   tunnelProtocol: vxlan
@@ -102,6 +114,8 @@ helm_cilium_helm_release_values:
     enabled: true
     image:
       repository: quay.io/cilium/operator
+      pullPolicy: IfNotPresent
+      useDigest: false
     replicas: 1
     securityContext:
       allowPrivilegeEscalation: true
@@ -110,6 +124,8 @@ helm_cilium_helm_release_values:
     enabled: true
     image:
       repository: quay.io/cilium/startup-script
+      pullPolicy: IfNotPresent
+      useDigest: false
     securityContext:
       allowPrivilegeEscalation: true
       privileged: true
@@ -117,12 +133,18 @@ helm_cilium_helm_release_values:
     enabled: false
     image:
       repository: quay.io/cilium/cilium
+      pullPolicy: IfNotPresent
+      useDigest: false
     envoy:
       image:
         repository: quay.io/cilium/cilium-envoy
+        pullPolicy: IfNotPresent
+        useDigest: false
   clustermesh:
     apiserver:
       image:
         repository: quay.io/cilium/clustermesh-apiserver
+        pullPolicy: IfNotPresent
+        useDigest: false
   sctp:
     enabled: true
