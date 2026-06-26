@@ -45,7 +45,7 @@ helm_cilium_helm_release_values:
     uninstall: true
     chainingMode: portmap
     exclusive: true
-    confPath: /etc/cni/net.d
+    confPath: /etc/containers/networks
     binPath: /opt/cni/bin
   endpointRoutes:
     enabled: false
