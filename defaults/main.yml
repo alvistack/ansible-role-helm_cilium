@@ -78,7 +78,7 @@ helm_cilium_helm_release_values:
     operator:
       clusterPoolIPv4PodCIDRList:
         - "10.233.64.0/18"
-      clusterPoolIPv4MaskSize: "24"
+      clusterPoolIPv4MaskSize: 24
   ipv4:
     enabled: true
   ipv6:
