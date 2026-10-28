@@ -48,9 +48,9 @@ helm_cilium_helm_release_values:
     confPath: /etc/containers/networks
     binPath: /opt/cni/bin
   endpointRoutes:
-    enabled: false
-  socketLB:
     enabled: true
+  socketLB:
+    enabled: false
   certgen:
     image:
       repository: quay.io/cilium/certgen
@@ -77,8 +77,8 @@ helm_cilium_helm_release_values:
     mode: cluster-pool
     operator:
       clusterPoolIPv4PodCIDRList:
-        - 10.233.64.0/18
-      clusterPoolIPv4MaskSize: 24
+        - "10.233.64.0/18"
+      clusterPoolIPv4MaskSize: "24"
   ipv4:
     enabled: true
   ipv6:
